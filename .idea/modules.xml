@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/SO_Simulator/SO_Simulator.iml" filepath="$PROJECT_DIR$/SO_Simulator/SO_Simulator.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/SimulacionAdministradorDeTareasSO.iml" filepath="$PROJECT_DIR$/.idea/SimulacionAdministradorDeTareasSO.iml" />
     </modules>
   </component>
