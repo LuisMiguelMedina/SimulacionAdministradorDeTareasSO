@@ -1,5 +1,7 @@
 package org.example.Model;
 
+import org.example.View.GanttChart;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,10 +16,11 @@ public class SRTFAlgorithm {
         Process = new ArrayList<>();
     }
 
-    static void findWaitingTime(Process[] proc, int n, double[] wt) {
+    static void findWaitingTime(Process[] proc, int n, double[] wt, GanttChart chart) {
         double[] rt = new double[n];
         double contextSwitchTime = 0.2;
         int prevProcess = -1;
+        int xor = 0;
 
         for (int i = 0; i < n; i++)
             rt[i] = proc[i].getBurstTime();
@@ -40,10 +43,16 @@ public class SRTFAlgorithm {
                 continue;
             }
 
-            // Si el proceso anterior es diferente del actual, hay un cambio de contexto
             if (prevProcess != -1 && prevProcess != shortest) {
                 wt[prevProcess] += contextSwitchTime;
                 System.out.println("Cambio de contexto al proceso: " + proc[shortest].getName());
+                if (xor <= 0){
+                    chart.addProcess(proc[prevProcess].getName(), rt[prevProcess]);
+                    chart.addProcess(proc[shortest].getName(), rt[shortest]);
+                    xor++;
+                } else {
+                    chart.addProcess(proc[shortest].getName(), rt[shortest]);
+                }
             }
 
             rt[shortest]--;
@@ -67,11 +76,11 @@ public class SRTFAlgorithm {
     }
 
     // Method to calculate average time
-    void findavgTime(Process[] proc, int n) {
+    void findavgTime(Process[] proc, int n, GanttChart chart) {
         double[] wt = new double[n], tat = new double[n];
         double total_wt = 0, total_tat = 0;
 
-        findWaitingTime(proc, n, wt);
+        findWaitingTime(proc, n, wt, chart);
         findTurnAroundTime(proc, n, wt, tat);
 
         for (int i = 0; i < n; i++) {
@@ -100,7 +109,7 @@ public class SRTFAlgorithm {
     double getTTP() {
         return TTP;
     }
-    public void cargarProcesosDesdeCSV() {
+    public void cargarProcesosDesdeCSV(GanttChart chart) {
         try (BufferedReader br = new BufferedReader(new FileReader("SO_Simulator/src/main/java/org/example/FileData/SRTFData.csv"))) {
             String linea;
             while ((linea = br.readLine()) != null) {
@@ -111,15 +120,10 @@ public class SRTFAlgorithm {
                 Process proceso = new Process(nombre, tiempoLlegada, duracion);
                 Process.add(proceso);
             }
-            findavgTime(this.Process.toArray(new Process[0]), this.Process.size());
+            findavgTime(this.Process.toArray(new Process[0]), this.Process.size(), chart);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        SRTFAlgorithm srtf = new SRTFAlgorithm();
-        srtf.cargarProcesosDesdeCSV();
     }
 }
 
