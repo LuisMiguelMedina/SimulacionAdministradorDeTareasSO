@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2660f671-6afe-46e5-af5e-25a86076b7b7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/SO_Simulator/src/main/java/org/example/View/ColorsList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SO_Simulator/src/main/java/org/example/Model/SRTFAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/SO_Simulator/src/main/java/org/example/Model/SRTFAlgorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SO_Simulator/src/main/java/org/example/View/GanttChart.java" beforeDir="false" afterPath="$PROJECT_DIR$/SO_Simulator/src/main/java/org/example/View/GanttChart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SO_Simulator/src/main/java/org/example/View/SRTFView.java" beforeDir="false" afterPath="$PROJECT_DIR$/SO_Simulator/src/main/java/org/example/View/SRTFView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SO_Simulator/target/classes/org/example/Model/SRTFAlgorithm.class" beforeDir="false" afterPath="$PROJECT_DIR$/SO_Simulator/target/classes/org/example/Model/SRTFAlgorithm.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SO_Simulator/target/classes/org/example/View/GanttChart.class" beforeDir="false" afterPath="$PROJECT_DIR$/SO_Simulator/target/classes/org/example/View/GanttChart.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SO_Simulator/target/classes/org/example/View/SRTFView.class" beforeDir="false" afterPath="$PROJECT_DIR$/SO_Simulator/target/classes/org/example/View/SRTFView.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +63,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1684752966362</updated>
-      <workItem from="1684752968586" duration="6857000" />
+      <workItem from="1684752968586" duration="9968000" />
     </task>
     <servers />
   </component>

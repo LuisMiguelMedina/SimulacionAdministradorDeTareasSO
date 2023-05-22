@@ -46,7 +46,7 @@ public class SRTFAlgorithm {
             if (prevProcess != -1 && prevProcess != shortest) {
                 wt[prevProcess] += contextSwitchTime;
                 System.out.println("Cambio de contexto al proceso: " + proc[shortest].getName());
-                if (xor <= 0){
+                if (xor <= 0) {
                     chart.addProcess(proc[prevProcess].getName(), rt[prevProcess]);
                     chart.addProcess(proc[shortest].getName(), rt[shortest]);
                     xor++;
@@ -54,7 +54,6 @@ public class SRTFAlgorithm {
                     chart.addProcess(proc[shortest].getName(), rt[shortest]);
                 }
             }
-
             rt[shortest]--;
 
             minm = (int)rt[shortest];
