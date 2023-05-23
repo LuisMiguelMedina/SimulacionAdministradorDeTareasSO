@@ -23,12 +23,11 @@ public class GanttChart extends JPanel {
         colors = new ColorsList();
     }
 
-    public void addProcess(String processName, int burstTime, int executionTime) {
+    public void addProcess(String processName, double duration) {
         JPanel processPanel = new JPanel();
         processPanel.setBackground(colors.dameColores());
         // El ancho del panel está basado en el tiempo de ejecución del proceso
-        processPanel.setPreferredSize(new Dimension(UNIT_WIDTH * executionTime, PANEL_HEIGHT));
-        System.out.println(executionTime);
+        processPanel.setPreferredSize(new Dimension((int) (UNIT_WIDTH * duration), PANEL_HEIGHT));
         JLabel processLabel = new JLabel(processName, SwingConstants.CENTER);
         processLabel.setForeground(Color.BLACK);
         processPanel.add(processLabel);

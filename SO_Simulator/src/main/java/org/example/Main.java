@@ -1,6 +1,5 @@
 package org.example;
 
-import org.example.Model.SRTFAlgorithm;
 import org.example.View.SRTFView;
 
 import javax.swing.*;

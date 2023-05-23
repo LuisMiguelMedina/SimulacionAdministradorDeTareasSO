@@ -9,6 +9,8 @@ import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class SRTFView extends JFrame {
     private static final int TABLE_MARGIN = 20;
@@ -25,7 +27,9 @@ public class SRTFView extends JFrame {
 
         populateTableData(tableModel);
 
-        JButton button = new JButton("Inicio");
+        JButton buttonInicio = new JButton("Inicio");
+        JButton buttonTerminar = new JButton("Terminar");
+        buttonTerminar.setEnabled(false);
         GanttChart ganttChart = new GanttChart();
 
         String[] finalColumnNames = {"Información"};
@@ -47,45 +51,65 @@ public class SRTFView extends JFrame {
 
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(ganttChart, BorderLayout.CENTER);
-        panel.add(button, BorderLayout.PAGE_END);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        buttonPanel.add(buttonInicio);
+        buttonPanel.add(buttonTerminar);
+
+        JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        centerPanel.add(buttonPanel);
+
+        panel.add(centerPanel, BorderLayout.PAGE_END);
         constraints.gridx = 0;
         constraints.gridy = 1;
         constraints.weightx = 1.0;
         constraints.weighty = 0.0;
-        constraints.gridwidth = 2;
+        constraints.gridwidth = 3;
         constraints.insets = new Insets(TABLE_MARGIN, TABLE_MARGIN, TABLE_MARGIN, TABLE_MARGIN);
         getContentPane().add(panel, constraints);
 
         JPanel bottomPanel = new JPanel(new BorderLayout());
-        bottomPanel.setBorder(new EmptyBorder(TABLE_MARGIN, 0, 0, 0));
+        bottomPanel.setBorder(new EmptyBorder(TABLE_MARGIN, 0, TABLE_MARGIN, 0));
         bottomPanel.add(new JScrollPane(new JTable(finalTableModel)), BorderLayout.CENTER);
         constraints.gridx = 0;
         constraints.gridy = 2;
         constraints.weightx = 1.0;
         constraints.weighty = 0.5;
         constraints.gridwidth = 2;
-        constraints.insets = new Insets(TABLE_MARGIN, TABLE_MARGIN, 0, TABLE_MARGIN);
+        constraints.insets = new Insets(TABLE_MARGIN, TABLE_MARGIN, TABLE_MARGIN, TABLE_MARGIN);
         getContentPane().add(bottomPanel, constraints);
 
-        button.addActionListener(e -> {
-            if (ganttChart.hasMoreProcesses()) {
-                ganttChart.executeNextRunnable();
-                if (!ganttChart.hasMoreProcesses()) {
-                    button.setText("Finalizado");
-                    button.setEnabled(false);
-                    finalTableModel.addRow(new Object[]{"El cambio de contexto se realiza en 0.2 milisegundos "});
-                    finalTableModel.addRow(new Object[]{"Tiempo de espera por proceso: " + srtf.getWaitingTimes()});
-                    finalTableModel.addRow(new Object[]{"Tiempo de espera promedio (TEP): " + srtf.getTEP()});
-                    finalTableModel.addRow(new Object[]{"Tiempo total de procesos (TTP): " + srtf.getTTP()});
-                    finalTableModel.addRow(new Object[]{"Porcentaje de TTP que consume TEP: " + (srtf.getTTPQueConsumeTEP())});
-                } else {
-                    button.setText("Paso - " + (GanttChart.currentIndex + 1));
+        buttonInicio.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (ganttChart.hasMoreProcesses()) {
+                    ganttChart.executeNextRunnable();
+                    if (!ganttChart.hasMoreProcesses()) {
+                        buttonInicio.setText("Finalizado");
+                        buttonInicio.setEnabled(false);
+                        buttonTerminar.setEnabled(true);
+                        finalTableModel.addRow(new Object[]{"El cambio de contexto se realiza en 0.2 milisegundos "});
+                        finalTableModel.addRow(new Object[]{"Tiempo de espera por proceso: " + srtf.getProcessDataList()});
+                        finalTableModel.addRow(new Object[]{"Tiempo de espera promedio (TEP): " + srtf.getTEP()});
+                        finalTableModel.addRow(new Object[]{"Tiempo total de procesos (TTP): " + srtf.getTTP()});
+                        finalTableModel.addRow(new Object[]{"Porcentaje de TTP que consume TEP: " + (srtf.getTTPQueConsumeTEP())});
+                    } else {
+                        buttonInicio.setText("Paso - " + (GanttChart.currentIndex + 1));
+                    }
                 }
             }
         });
 
+        buttonTerminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+
         pack();
-        setSize(850, 500);
+        setSize(850, 600);
         setLocationRelativeTo(null);
     }
 
@@ -99,12 +123,5 @@ public class SRTFView extends JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            SRTFView view = new SRTFView();
-            view.setVisible(true);
-        });
     }
 }
